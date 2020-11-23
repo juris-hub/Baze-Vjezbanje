@@ -1,0 +1,60 @@
+drop database if exists Zupanija;
+create database Zupanija CHARACTER SET utf8; 
+
+use Zupanija;
+
+create table županija(
+	sifra int not null primary key auto_increment,
+	naziv varchar(50) not null,
+	župan int not null
+	
+);
+
+create table općina(
+	sifra int not null primary key auto_increment,
+	naziv varchar(50) not null,
+	županija int not null
+);
+
+create table mjesto(
+	sifra int not null primary key auto_increment,
+	naziv varchar(50) not null,
+	općina int not null
+);
+
+create table župan(
+	sifra int not null primary key auto_increment,
+	ime varchar(50) not null,
+	prezime varchar(50) not null
+);
+
+alter table županija add foreign key (župan) references župan(sifra);
+alter table općina add foreign key (županija) references županija(sifra);
+alter table mjesto add foreign key (općina) references općina(sifra);
+
+insert into županija(sifra,naziv) values
+	(1,'Vukovarsko-Srijemska'),
+	(2,'Osiječko-Baranjska'),
+	(3,'Brodsko-Posavska');
+	
+insert into općina(sifra,naziv) values
+	(1,'Cerna'),
+	(2,'Gradište'),
+	(3,'Slavonski Brod'),
+	(4,'Osijek'),
+	(5,'Antunovac'),
+	(6,'Vinkovci');
+	
+insert into mjesto (sifra, naziv) values 
+	(1,'Cerna'),
+	(2,'Cerna'),
+	(3,'Cerna'),
+	(4,'Cerna'),
+	(5,'Cerna'),
+	(6,'Cerna'),
+	(7,'Cerna'),
+	(8,'Cerna'),
+	(9,'Cerna'),
+	(10,'Cerna'),
+	(11,'Cerna'),
+	(12,'Cerna');
