@@ -1,7 +1,7 @@
-drop database if exists Zupanija;
-create database Zupanija CHARACTER SET utf8; 
+drop database if exists Zupanije;
+create database Zupanije CHARACTER SET utf8; 
 
-use Zupanija;
+use Zupanije;
 
 create table županija(
 	sifra int not null primary key auto_increment,
@@ -32,29 +32,41 @@ alter table županija add foreign key (župan) references župan(sifra);
 alter table općina add foreign key (županija) references županija(sifra);
 alter table mjesto add foreign key (općina) references općina(sifra);
 
-insert into županija(sifra,naziv) values
-	(1,'Vukovarsko-Srijemska'),
-	(2,'Osiječko-Baranjska'),
-	(3,'Brodsko-Posavska');
+insert into župan (sifra,ime,prezime) values
+	(1,'Mate','Matić'),
+	(2,'Slavko','Slavkić'),
+	(3,'Ivo','Ivić');
+
+insert into županija(sifra,naziv,župan) values
+	(1,'Vukovarsko-Srijemska',1),
+	(2,'Osiječko-Baranjska',2),
+	(3,'Brodsko-Posavska',3);
 	
-insert into općina(sifra,naziv) values
-	(1,'Cerna'),
-	(2,'Gradište'),
-	(3,'Slavonski Brod'),
-	(4,'Osijek'),
-	(5,'Antunovac'),
-	(6,'Vinkovci');
+insert into općina(sifra,naziv,županija) values
+	(1,'Cerna',1),
+	(2,'Gradište',1),
+	(3,'Slavonski Brod',3),
+	(4,'Osijek',2),
+	(5,'Antunovac',2),
+	(6,'Vinkovci',1);
 	
-insert into mjesto (sifra, naziv) values 
-	(1,'Cerna'),
-	(2,'Cerna'),
-	(3,'Cerna'),
-	(4,'Cerna'),
-	(5,'Cerna'),
-	(6,'Cerna'),
-	(7,'Cerna'),
-	(8,'Cerna'),
-	(9,'Cerna'),
-	(10,'Cerna'),
-	(11,'Cerna'),
-	(12,'Cerna');
+insert into mjesto (sifra, naziv,općina) values 
+	(1,'Cerna',1),
+	(2,'Gradište',2),
+	(3,'Šiškovci',1),
+	(4,'Andrijaševci',1),
+	(5,'Antunovac',5),
+	(6,'Ernestinovo',4),
+	(7,'Jarmina',6),
+	(8,'Tenja',4),
+	(9,'Gunjavci',3),
+	(10,'Nova Gradiška',3),
+	(11,'Slavonski Brod',3),
+	(12,'Babina Greda',1);
+	
+	
+update župan set ime = 'Mišo', prezime = 'Mišić' where sifra = 1;
+update mjesto set naziv = 'Cerić' where naziv = 'Cerna';
+update mjesto set naziv = 'Jazavci' where naziv = 'Šiškovci';
+update mjesto set naziv = 'Vinkovci' where sifra = 2;
+update mjesto set naziv = 'Babna Greda' where sifra = 12;
