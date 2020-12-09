@@ -8,7 +8,7 @@ create table klijent (
 	ime varchar(50) not null,
 	prezime varchar(50) not null,
 	oib char(11),
-	postanskiBroj varchar(10) not null,
+	adresa varchar(30) not null,
 	email varchar(50) not null
 );
 
@@ -40,8 +40,22 @@ create table bankar_klijent(
 	bankar int
 );
 
+create table poslovnicaBanke (
+	sifra int not null primary key auto_increment,
+	grad varchar(30) not null,
+	postanskiBroj varchar(10) not null	
+);
+
+CREATE TABLE bankar_poslovnica(
+	sifra int not null primary key auto_increment,
+	bankar int,
+	poslovnicaBanke int
+);
+
 
 alter table racun add foreign key (klijent) references klijent(sifra);
 alter table kreditnaKartica add foreign key (klijent) references klijent(sifra);
 alter table bankar_klijent add foreign key (klijent) references klijent(sifra);
 alter table bankar_klijent add foreign key (bankar) references bankar(sifra);
+alter table bankar_poslovnica add foreign key (bankar) references bankar(sifra);
+alter table bankar_poslovnica add foreign key (poslovnicabanke) references poslovnicaBanke(sifra);
