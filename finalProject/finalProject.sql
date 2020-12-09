@@ -23,7 +23,7 @@ create table Bankar (
 create table KreditnaKartica (
 	sifra int not null primary key auto_increment,
 	vrijediDo date not null,
-	limitKartice int not null,
+	limitKartice decimal(21,2) not null,
 	brojKartice char(16) not null,
 	Klijent int
 );
@@ -31,6 +31,6 @@ create table KreditnaKartica (
 create table Racun (
 	sifra int not null primary key auto_increment,
 	brojRacuna char(14) not null,
-	stanjeRacuna int,
+	stanjeRacuna decimal(21,2),
 	Klijent int
 );
