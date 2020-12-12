@@ -116,5 +116,14 @@ delete from mladic where kuna > 15.78;
 select kratkamajica
 from zena where hlace like '%ana%';
 
-select dukserica
-from svekar a
+select a.dukserica, f.asocijalno , e.hlace 
+from svekar a INNER JOIN sestra_svekar b ON a.sifra = b.svekar
+INNER JOIN sestra c ON b.sestra = c.sifra
+INNER JOIN zena d ON c.sifra = d.sestra
+INNER JOIN muskarac e ON d.sifra = e.zena
+INNER JOIN mladic f ON e.sifra = f.muskarac
+where e.hlace like '%a' and c.haljina like '%ba%' order by e.hlace desc;
+
+select a.haljina, a.maraka 
+from sestra a inner join sestra_svekar b on b.sestra = a.sifra
+where a.sifra not in (select sestra from sestra_svekar);
