@@ -118,3 +118,6 @@ inner join neprijatelj e on d.sifra = e.cura
 inner join brat f on e.sifra = f.neprijatelj 
 where d.drugiputa is not null and c.vesta like '%ba%' order by e.haljina desc;
 
+select vesta , asocijalno 
+from decko a inner join decko_zarucnica b on a.sifra = b.decko 
+where a.sifra not in (select decko from decko_zarucnica);
