@@ -72,4 +72,49 @@ create table neprijatelj(
 	cura int
 );
 
+alter table cura add foreign key (decko) references decko(sifra);
+alter table decko_zarucnica add foreign key (decko) references decko(sifra);
+alter table decko_zarucnica add foreign key (zarucnica) references zarucnica(sifra);
+alter table prijatelj add foreign key (svekar) references svekar(sifra);
+alter table neprijatelj add foreign key (cura) references cura(sifra);
+alter table brat add foreign key (neprijatelj) references neprijatelj(sifra);
+
+insert into neprijatelj (sifra,haljina,modelnaocala,kuna) 
+values	(1,'plavacrna','veliki',22.123),
+		(2,'plavacrna','veliki',22.123),
+		(3,'plavacrna','veliki',22.123);
+
+insert into cura (sifra,haljina,drugiputa) 
+values	(1,'plavacrna',now()),
+		(2,'plavacrna',now()),
+		(3,'plavacrna',now());
+	
+insert into decko (sifra,asocijalno)
+values (1,1),
+	(2,1),
+	(3,0);
+
+insert into zarucnica (sifra,bojakose,lipa,indiferentno )
+values	(1,'plava',22.1,1),
+(2,'plava',22.1,0),
+(3,'plava',22.1,0);
+		
+insert into decko_zarucnica (sifra,decko, zarucnica) 
+values	(1,2,3),
+		(2,3,1),
+		(3,2,1);
+		
+update  prijatelj set treciputa = '2020-04-30';
+delete from brat where ogrlica != 14;
+
+select suknja 
+from cura where drugiputa = null;
+
+select a.novcica , f.neprijatelj , e.haljina 
+from zarucnica a inner join decko_zarucnica b on a.sifra = b.zarucnica 
+inner join decko c on b.zarucnica = c.sifra 
+inner join cura d on c.sifra = d.decko 
+inner join neprijatelj e on d.sifra = e.cura 
+inner join brat f on e.sifra = f.neprijatelj 
+where d.drugiputa is not null and c.vesta like '%ba%' order by e.haljina desc;
 
