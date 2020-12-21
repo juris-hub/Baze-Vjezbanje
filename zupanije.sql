@@ -1,0 +1,78 @@
+drop database if exists Zupanije;
+create database Zupanije CHARACTER SET utf8; 
+
+use Zupanije;
+
+create table županija(
+	sifra int not null primary key auto_increment,
+	naziv varchar(50) not null,
+	župan int not null
+	
+);
+
+create table općina(
+	sifra int not null primary key auto_increment,
+	naziv varchar(50) not null,
+	županija int not null
+);
+
+create table mjesto(
+	sifra int not null primary key auto_increment,
+	naziv varchar(50) not null,
+	općina int not null
+);
+
+create table župan(
+	sifra int not null primary key auto_increment,
+	ime varchar(50) not null,
+	prezime varchar(50) not null
+);
+
+alter table županija add foreign key (župan) references župan(sifra);
+alter table općina add foreign key (županija) references županija(sifra);
+alter table mjesto add foreign key (općina) references općina(sifra);
+
+insert into župan (sifra,ime,prezime) values
+	(1,'Mate','Matić'),
+	(2,'Slavko','Slavkić'),
+	(3,'Ivo','Ivić');
+
+insert into županija(sifra,naziv,župan) values
+	(1,'Vukovarsko-Srijemska',1),
+	(2,'Osiječko-Baranjska',2),
+	(3,'Brodsko-Posavska',3);
+	
+insert into općina(sifra,naziv,županija) values
+	(1,'Cerna',1),
+	(2,'Gradište',1),
+	(3,'Slavonski Brod',3),
+	(4,'Osijek',2),
+	(5,'Antunovac',2),
+	(6,'Vinkovci',1);
+	
+insert into mjesto (sifra, naziv,općina) values 
+	(1,'Cerna',1),
+	(2,'Gradište',2),
+	(3,'Šiškovci',1),
+	(4,'Andrijaševci',1),
+	(5,'Antunovac',5),
+	(6,'Ernestinovo',4),
+	(7,'Jarmina',6),
+	(8,'Tenja',4),
+	(9,'Gunjavci',3),
+	(10,'Nova Gradiška',3),
+	(11,'Slavonski Brod',3),
+	(12,'Babina Greda',1);
+	
+	
+update župan set ime = 'Mišo', prezime = 'Mišić' where sifra = 1;
+update mjesto set naziv = 'Cerić' where naziv = 'Cerna';
+update mjesto set naziv = 'Jazavci' where naziv = 'Šiškovci';
+update mjesto set naziv = 'Vinkovci' where sifra = 2;
+update mjesto set naziv = 'Babna Greda' where sifra = 12;
+
+
+delete from mjesto where sifra = 3;
+delete from županija where sifra =3;
+delete from općina where sifra = 3;
+delete from župan where sifra = 3;
